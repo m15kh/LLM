@@ -1,1 +1,4 @@
 *.json
+*.txt
+*.srt
+notebooks/
