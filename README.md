@@ -18,7 +18,7 @@ This repository contains resources and code related to Language Learning Models 
 
 1. Clone the repository:
     ```bash
-    git clone /home/ubuntu/m15kh/own/LLM
+    git clone https://github.com/m15kh/LLM.git
     ```
 
 2. Create a `config.yaml` file in the root directory with the following structure to set API keys:
