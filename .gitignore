@@ -1,5 +1,6 @@
 *.json
-*.txt
 *.srt
 notebooks/
 config.yaml
+srt/dan_english.txt
+srt/dan_persian.txt
