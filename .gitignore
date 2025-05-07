@@ -4,3 +4,4 @@ notebooks/
 config.yaml
 srt/dan_english.txt
 srt/dan_persian.txt
+Phi-3-mini-4k-instruct-fp16.gguf
