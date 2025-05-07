@@ -1,8 +1,10 @@
 from langchain_community.llms import LlamaCpp
-from langchain_core.runnables import RunnableSequence
 from langchain_core.prompts import PromptTemplate
 from SmartAITool.core import bprint , cprint
 from pprint import pprint
+from langchain_core.runnables import RunnableLambda
+
+
 llm = LlamaCpp(
 model_path="/home/rteam2/m15kh/LLM/checkpoints/Phi-3-mini-4k-instruct-fp16.gguf",
 n_gpu_layers=-1,
@@ -20,7 +22,7 @@ title_template = """
 <|assistant|>
 """
 
-title_prompt = PromptTemplate(template= title_template, input_variables=["summary"])
+title_prompt = PromptTemplate(template = title_template, input_variables = ["summary"])
 
 title_chain = title_prompt | llm 
 
@@ -68,13 +70,20 @@ story_chain = story_prompt | llm
 #     "title": title_result,
 #     "character": character_result
 # })
-llm_chain = title_chain | character_chain | story_chain
 
+
+
+def chain_func(inputs):
+    summary = inputs["summary"]
+    title = title_chain.invoke({"summary": summary})
+    character = character_chain.invoke({"summary": summary, "title": title})
+    story = story_chain.invoke({"summary": summary, "title": title, "character": character})
+    return story
+
+llm_chain = RunnableLambda(chain_func)
 
 summary_input = {"summary": "a girl that lost her mother"}
 llm_result = llm_chain.invoke(summary_input)
-
-bprint()
-cprint("llm_result:", 'blue')
+cprint('story')
 pprint(llm_result)
-
+    
